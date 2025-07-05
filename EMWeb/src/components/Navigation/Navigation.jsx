@@ -13,6 +13,9 @@ const Navigation = ()=>{
             <li>
               <Link to="/create-event">Create Event</Link>
             </li>
+            <li>
+              <Link to="/Login">Login</Link>
+            </li>
         </ul>
     </nav>
   )
