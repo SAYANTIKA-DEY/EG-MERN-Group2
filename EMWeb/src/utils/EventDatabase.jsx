@@ -46,4 +46,24 @@ export const eventList = [
     },
     
   ];
+
+// Utility function to get all events (static + custom)
+export const getAllEvents = () => {
+  const customEvents = JSON.parse(localStorage.getItem('customEvents') || '[]');
+  return [...eventList, ...customEvents];
+};
+
+// Utility function to add a new event
+export const addEvent = (newEvent) => {
+  const customEvents = JSON.parse(localStorage.getItem('customEvents') || '[]');
+  const updatedEvents = [...customEvents, newEvent];
+  localStorage.setItem('customEvents', JSON.stringify(updatedEvents));
+  return updatedEvents;
+};
+
+// Utility function to find event by ID
+export const findEventById = (id) => {
+  const allEvents = getAllEvents();
+  return allEvents.find(event => event.id === parseInt(id));
+};
   

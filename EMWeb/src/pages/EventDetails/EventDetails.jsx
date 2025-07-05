@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { eventList } from "../../utils/EventDatabase";
+import { findEventById } from "../../utils/EventDatabase";
 import Navigation from "../../components/Navigation/Navigation";
 import {MdCalendarMonth} from "react-icons/md";
 import {IoLocationSharp} from "react-icons/io5"
@@ -8,8 +8,21 @@ const EventDetails = ()=>{
   const {id}=useParams()
   const numId = Number(id)
 
-  const filteredEvent = eventList.find(
-    eventDetail=>eventDetail.id===numId)
+  const filteredEvent = findEventById(numId)
+
+  if (!filteredEvent) {
+    return (
+      <div className="event-details-container">
+        <Navigation />
+        <div className="event-details-wrapper">
+          <div className="event-not-found">
+            <h2>Event Not Found</h2>
+            <p>The event you're looking for doesn't exist.</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return(
     <div className="event-details-container">
@@ -30,6 +43,11 @@ const EventDetails = ()=>{
               <IoLocationSharp className="icon" />
               {filteredEvent.location}
             </p>
+            {filteredEvent.time && (
+              <p className="time font-weight-med">
+                <span className="font-weight-med">Time: {filteredEvent.time}</span>
+              </p>
+            )}
           </div>
           <p className="description">
             <span className="description-heading">Event Description:</span>
